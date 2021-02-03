@@ -83,12 +83,12 @@ class HandleListOfBooksTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $book1 = Book::factory()->create(['user_id' => $user->id]);
+        $book = Book::factory()->create(['user_id' => $user->id]);
 
-        $books = $this->getJson('/books')->json();
+        $books = $this->getJson("/book/{$book->id}")->json();
 
-        $this->assertNotNull($books[0]->title);
-        $this->assertNotNull($books[0]->rating);
-        $this->assertNotNull($books[0]->published_date);
+        $this->assertNotNull($books['title']);
+        $this->assertNotNull($books['rating']);
+        $this->assertNotNull($books['published_date']);
     }
 }

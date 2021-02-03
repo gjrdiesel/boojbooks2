@@ -56,11 +56,15 @@ class BookController extends Controller
      * Display the specified resource.
      *
      * @param \App\Models\Book $book
-     * @return \Illuminate\Http\Response
+     * @return Book
      */
     public function show(Book $book)
     {
-        //
+        if (auth()->user()->id !== $book->user_id) {
+            abort(Response::HTTP_FORBIDDEN, 'Cannot view this book');
+        }
+
+        return $book;
     }
 
     /**
