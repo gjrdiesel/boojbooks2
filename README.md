@@ -11,6 +11,10 @@
 
 See original: [Booj Reading List](https://github.com/ActiveWebsite/boojbooks/blob/f0a437211cb90a50278b10e7bbaee4df785578b5/README.md).
 
+# Issues
+
+Please see https://github.com/gjrdiesel/boojbooks2/issues/1 for known issues 🥴
+
 # Testing
 
 See [tests/Feature/HandleListOfBooksTest.php](tests/Feature/HandleListOfBooksTest.php), or visit the [postman docs](https://documenter.getpostman.com/view/14448196/TW71n7i9).
