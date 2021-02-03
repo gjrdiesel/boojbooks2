@@ -17,7 +17,7 @@ class BookController extends Controller
     public function index(Request $request)
     {
         $fields = $request->validate([
-            'sort.column' => 'in:title,published_date,rating,position',
+            'sort.column' => 'in:title,published_year,position',
             'sort.dir' => 'in:asc,desc',
         ]);
 

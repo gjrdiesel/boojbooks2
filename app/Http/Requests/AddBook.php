@@ -25,8 +25,11 @@ class AddBook extends FormRequest
     {
         return [
             'title' => 'required|string',
+            'subtitle' => 'nullable|string',
             'author' => 'required|string',
-            'published_date' => 'required|date'
+            'published_year' => 'nullable|integer',
+            'ol_link' => 'nullable|string',
+            'ol_cover' => 'nullable|integer',
         ];
     }
 }

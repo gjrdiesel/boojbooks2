@@ -23,9 +23,9 @@ class BookFactory extends Factory
     {
         return [
             'title' => $this->faker->catchPhrase,
+            'subtitle' => $this->faker->catchPhrase,
             'author' => $this->faker->name,
-            'published_date' => $this->faker->date(),
-            'rating' => rand(0, 500) / 100, // 250 -> 2.5
+            'published_year' => rand(1800, date('Y')),
             'user_id' => 1
         ];
     }

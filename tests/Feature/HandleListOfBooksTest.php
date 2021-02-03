@@ -19,11 +19,8 @@ class HandleListOfBooksTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $this->post('/book', [
-            'title' => 'The Great Gatsby',
-            'author' => 'F. Scott Fitzgerald',
-            'published_date' => '1925-04-10'
-        ])->assertStatus(Response::HTTP_CREATED);
+        $books = $this->get('/search?query=the+great+gatsby&page=1')->json('data');
+        $this->get($books[1]['save_link'])->json('data');
 
         $this->assertDatabaseHas('books', ['title' => 'The Great Gatsby', 'user_id' => $user->id]);
     }
@@ -64,16 +61,16 @@ class HandleListOfBooksTest extends TestCase
         $this->assertEquals(['Book 1', 'Book 2', 'Book 3'], Book::sorted()->get()->pluck('title')->toArray());
     }
 
-    public function test_can_sort_books_by_rating()
+    public function test_can_sort_books_by_year()
     {
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        Book::factory()->create(['title' => 'Book 1', 'rating' => 3, 'user_id' => $user->id]);
-        Book::factory()->create(['title' => 'Book 2', 'rating' => 1, 'user_id' => $user->id]);
-        Book::factory()->create(['title' => 'Book 3', 'rating' => 2, 'user_id' => $user->id]);
+        Book::factory()->create(['title' => 'Book 1', 'published_year' => 2003, 'user_id' => $user->id]);
+        Book::factory()->create(['title' => 'Book 2', 'published_year' => 2001, 'user_id' => $user->id]);
+        Book::factory()->create(['title' => 'Book 3', 'published_year' => 2002, 'user_id' => $user->id]);
 
-        $books = $this->getJson('/book?sort[column]=rating')->json('data');
+        $books = $this->getJson('/book?sort[column]=published_year')->json('data');
 
         $this->assertEquals(['Book 1', 'Book 3', 'Book 2'], \Arr::pluck($books, 'title'));
     }
@@ -101,8 +98,8 @@ class HandleListOfBooksTest extends TestCase
 
         $books = $this->getJson("/book/{$book->id}")->json();
 
-        $this->assertNotNull($books['title']);
-        $this->assertNotNull($books['rating']);
-        $this->assertNotNull($books['published_date']);
+        $this->assertNotEmpty($books['title']);
+        $this->assertNotEmpty($books['author']);
+        $this->assertNotEmpty($books['published_year']);
     }
 }
