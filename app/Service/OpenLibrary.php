@@ -26,7 +26,7 @@ class OpenLibrary
     function fetch($method, $endpoint, $args)
     {
         return $this->cache->remember("ol:$method:$endpoint:$this->current_page:" . base64_encode(json_encode($args)), $this->ttl, function () use ($method, $endpoint, $args) {
-            return Http::$method("{$this->base_url}/$endpoint.json", $args);
+            return Http::$method("{$this->base_url}/$endpoint.json", $args)->json();
         });
     }
 
