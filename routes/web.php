@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,9 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/login', function () {
+    $user = User::first();
+    auth()->login($user);
+    return $user;
 });
 
-Route::get('search', \App\Http\Controllers\SearchController::class);
-Route::resource('book', \App\Http\Controllers\BookController::class);
+Route::get('search', Controllers\SearchController::class);
+Route::resource('book', Controllers\BookController::class);
