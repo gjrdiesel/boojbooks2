@@ -36,6 +36,8 @@ class OpenLibrary
 
         // Modify docs so they're more how we want them for demo's sake
         $items = collect($results['docs'])->map(function ($result, $index) {
+            $index += 1;
+
             return [
                 'index' => $index,
                 'save_link' => request()->fullUrlWithQuery(['save' => $index]),

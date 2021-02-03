@@ -22,7 +22,7 @@ class SearchController extends Controller
         ]);
 
         if ($fields['save'] ?? false) {
-            $this->saveBook($fields['save'], $fields['query'], $request->page, $request->user());
+            $this->saveBook($fields['save'] - 1, $fields['query'], $request->page, $request->user());
         }
 
         return OpenLibrary::search($fields['query']);
