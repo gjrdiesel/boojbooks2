@@ -14,9 +14,21 @@ class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $request->validate([
+            'sort.column' => 'in:title,published_date,rating',
+            'sort.dir' => 'in:asc,desc',
+        ]);
+
+        return $request->user()
+            ->books()
+            ->when(!$request->sort, fn($query) => $query->sorted())
+            ->when($request->sort, function ($query, $sort) {
+                $column = $sort['column'];
+                $direction = $sort['dir'] ?? 'desc';
+                return $query->orderBy($column, $direction);
+            })->paginate();
     }
 
     /**

@@ -73,7 +73,7 @@ class HandleListOfBooksTest extends TestCase
         Book::factory()->create(['title' => 'Book 2', 'rating' => 1, 'user_id' => $user->id]);
         Book::factory()->create(['title' => 'Book 3', 'rating' => 2, 'user_id' => $user->id]);
 
-        $books = $this->getJson('/books?sort=rating:desc')->json();
+        $books = $this->getJson('/book?sort[column]=rating')->json('data');
 
         $this->assertEquals(['Book 1', 'Book 3', 'Book 2'], \Arr::pluck($books, 'title'));
     }
