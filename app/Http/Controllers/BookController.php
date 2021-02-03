@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AddBook;
 use App\Models\Book;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class BookController extends Controller
 {
@@ -81,6 +82,10 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
-        //
+        if (auth()->user()->id !== $book->user_id) {
+            abort(Response::HTTP_FORBIDDEN, 'Cannot modify this book');
+        }
+
+        $book->delete();
     }
 }
