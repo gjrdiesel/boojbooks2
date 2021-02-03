@@ -49,13 +49,19 @@ class HandleListOfBooksTest extends TestCase
         $book2 = Book::factory()->create(['title' => 'Book 2', 'user_id' => $user->id]);
         $book3 = Book::factory()->create(['title' => 'Book 3', 'user_id' => $user->id]);
 
-        $this->assertEquals(['Book 1', 'Book 2', 'Book 3'], Book::all()->pluck('title'));
+        $this->assertEquals(['Book 1', 'Book 2', 'Book 3'], Book::sorted()->get()->pluck('title')->toArray());
 
+        // Move before
         $this->patch("/book/{$book3->id}", [
             'before' => $book1->id
         ]);
+        $this->assertEquals(['Book 3', 'Book 1', 'Book 2'], Book::sorted()->get()->pluck('title')->toArray());
 
-        $this->assertEquals(['Book 3', 'Book 1', 'Book 2'], Book::all()->pluck('title'));
+        // Move after
+        $this->patch("/book/{$book3->id}", [
+            'after' => $book2->id
+        ]);
+        $this->assertEquals(['Book 1', 'Book 2', 'Book 3'], Book::sorted()->get()->pluck('title')->toArray());
     }
 
     public function test_can_sort_books_by_rating()

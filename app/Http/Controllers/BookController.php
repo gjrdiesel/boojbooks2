@@ -71,7 +71,18 @@ class BookController extends Controller
      */
     public function update(Request $request, Book $book)
     {
-        //
+        if (auth()->user()->id !== $book->user_id) {
+            abort(Response::HTTP_FORBIDDEN, 'Cannot modify this book');
+        }
+
+        if ($request->before) {
+            $book2 = $request->user()->books()->findOrFail($request->before);
+            $book->moveBefore($book2);
+        }
+        if ($request->after) {
+            $book2 = $request->user()->books()->findOrFail($request->after);
+            $book->moveAfter($book2);
+        }
     }
 
     /**
