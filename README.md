@@ -1,6 +1,15 @@
 # Boojbooks
 
-For todo list; see [Booj Reading List](https://github.com/ActiveWebsite/boojbooks/blob/f0a437211cb90a50278b10e7bbaee4df785578b5/README.md).
+- Connect to a publicly available API - [See OpenLibrary](app/Service/OpenLibrary.php) / [Usage](app/Http/Controllers/SearchController.php) 
+- Create Postman collection and Vue app OR Laravel App - [Postman docs](https://documenter.getpostman.com/view/14448196/TW71n7i9)
+- Add or remove items from the list 
+- Change the order of the items in the list
+- Sort the list of items
+- Display a detail page with at least 3 points of data to display 
+- Include unit tests [Did feature test](tests/Feature/HandleListOfBooksTest.php)
+- Deploy it on the cloud - be prepared to describe your process on deployment https://boojbooks2.herokuapp.com/login
+
+See original: [Booj Reading List](https://github.com/ActiveWebsite/boojbooks/blob/f0a437211cb90a50278b10e7bbaee4df785578b5/README.md).
 
 # Testing
 
