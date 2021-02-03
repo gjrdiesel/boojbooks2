@@ -2,6 +2,10 @@
 
 For todo list; see [Booj Reading List](https://github.com/ActiveWebsite/boojbooks/blob/f0a437211cb90a50278b10e7bbaee4df785578b5/README.md).
 
+# Testing
+
+See [tests/Feature/HandleListOfBooksTest.php](tests/Feature/HandleListOfBooksTest.php), or visit the [postman docs](https://documenter.getpostman.com/view/14448196/TW71n7i9).
+
 # Deployment
 
 Deploying to Heroku because it's basically a one-liner. Have experience deploying to vapor, aws, onprem (via ansible), digitalocean.
