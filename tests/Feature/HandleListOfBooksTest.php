@@ -78,6 +78,20 @@ class HandleListOfBooksTest extends TestCase
         $this->assertEquals(['Book 1', 'Book 3', 'Book 2'], \Arr::pluck($books, 'title'));
     }
 
+    public function test_sorts_books_by_position_by_default()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        Book::factory()->create(['title' => 'Book 1', 'position' => 3, 'user_id' => $user->id]);
+        Book::factory()->create(['title' => 'Book 2', 'position' => 1, 'user_id' => $user->id]);
+        Book::factory()->create(['title' => 'Book 3', 'position' => 2, 'user_id' => $user->id]);
+
+        $books = $this->getJson('/book')->json('data');
+
+        $this->assertEquals(['Book 1', 'Book 3', 'Book 2'], \Arr::pluck($books, 'title'));
+    }
+
     public function test_get_3_book_details()
     {
         $user = User::factory()->create();
