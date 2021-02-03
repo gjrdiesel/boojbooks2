@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Book;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\Response;
 use Tests\TestCase;
 
 class HandleListOfBooksTest extends TestCase
@@ -13,6 +14,8 @@ class HandleListOfBooksTest extends TestCase
 
     public function test_can_add_book()
     {
+        $this->withoutExceptionHandling();
+
         $user = User::factory()->create();
         $this->actingAs($user);
 
@@ -20,7 +23,7 @@ class HandleListOfBooksTest extends TestCase
             'title' => 'The Great Gatsby',
             'author' => 'F. Scott Fitzgerald',
             'published_date' => '1925-04-10'
-        ]);
+        ])->assertStatus(Response::HTTP_CREATED);
 
         $this->assertDatabaseHas('books', ['title' => 'The Great Gatsby', 'user_id' => $user->id]);
     }
