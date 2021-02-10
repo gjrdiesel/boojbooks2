@@ -3,11 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Facades\App\Service\OpenLibrary;
+use App\Service\BookApiInterface;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
+    private BookApiInterface $api;
+
+    public function __construct(BookApiInterface $api)
+    {
+        $this->api = $api;
+    }
+
     /**
      * Handle the incoming request.
      *
@@ -25,12 +32,12 @@ class SearchController extends Controller
             $this->saveBook($fields['save'] - 1, $fields['query'], $request->page, $request->user());
         }
 
-        return OpenLibrary::search($fields['query']);
+        return $this->api->search($fields['query']);
     }
 
     private function saveBook($id, $query, $page, User $user)
     {
-        $book = OpenLibrary::search($query)[$id] ?? null;
+        $book = $this->api->search($query)[$id] ?? null;
 
         if (!$book) {
             abort(500, "Could not find book $id, page $page");

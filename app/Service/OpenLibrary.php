@@ -7,7 +7,7 @@ use Illuminate\Cache\CacheManager;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Http;
 
-class OpenLibrary
+class OpenLibrary implements BookApiInterface
 {
     protected string $base_url = 'http://openlibrary.org';
     protected Carbon $ttl;

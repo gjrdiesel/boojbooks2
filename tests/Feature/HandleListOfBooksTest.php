@@ -4,8 +4,9 @@ namespace Tests\Feature;
 
 use App\Models\Book;
 use App\Models\User;
+use App\Service\BookApiInterface;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\Response;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Tests\TestCase;
 
 class HandleListOfBooksTest extends TestCase
@@ -14,6 +15,28 @@ class HandleListOfBooksTest extends TestCase
 
     public function test_can_add_book()
     {
+        app()->bind(BookApiInterface::class, function () {
+            return new class implements BookApiInterface {
+                function search(string $query, $args = [])
+                {
+                    return new LengthAwarePaginator(
+                        [
+                            ['title' => 'The Test Gatsby'],
+                            [
+                                'title' => 'The Great Gatsby',
+                                'save_link' => request()->fullUrlWithQuery(['save' => 2]),
+                                'subtitle' => 'subtitle',
+                                'author' => 'author',
+                                'published_year' => 2021,
+                                'ol_link' => 'ol_link',
+                                'ol_cover' => 'ol_cover',
+                            ],
+                        ], 2, 10, 1
+                    );
+                }
+            };
+        });
+
         $this->withoutExceptionHandling();
 
         $user = User::factory()->create();

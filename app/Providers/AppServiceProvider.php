@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Service\BookApiInterface;
+use App\Service\OpenLibrary;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(BookApiInterface::class, OpenLibrary::class);
     }
 
     /**
